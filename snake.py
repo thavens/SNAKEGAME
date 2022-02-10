@@ -1,6 +1,7 @@
-
+from Entity import SnakeEntity
 from grid import Grid, Location, Entity
 import pygame
+
 
 
 class Snake:
@@ -17,8 +18,8 @@ class Snake:
         self.init_snake()
 
     def init_snake(self):
-        for i in range(20):
-            self.add_part(Location(i, 0))
+        for i in range(30):
+            self.add_part(Location(0, i))
 
     def move_up(self):
         self.move(Grid.up)
@@ -37,7 +38,7 @@ class Snake:
 
     def move(self, direction):
         self.curr_direction = direction
-        new_loc = Location.add(direction, self.body[0])
+        new_loc = Location.add(direction, self.body[0].loc)
         if not self.grid.in_bounds(new_loc):
             self.handle_out_of_bounds(new_loc)
         self.add_part(new_loc)
@@ -55,13 +56,15 @@ class Snake:
             loc.col = self.grid.num_cols - 1
 
     def remove_tail(self):
-        self.grid.remove_entity(self.body.pop())
+        self.grid.remove_entity(self.body.pop().loc)
 
     def add_part(self, loc):
-        self.body.insert(0, loc)
-        self.head_color = (self.head_color + 1) % len(self.colors)
+        self.update_head_color()
         color = self.colors[self.head_color]
         # color = helpers.random_color()
+        body_part = SnakeEntity(self.grid, loc, color)
+        self.body.insert(0, body_part )
+        self.grid.add_entity(body_part)
 
-        entity = Entity(loc, color, "snake part")
-        self.grid.add_entity(entity)
+    def update_head_color(self):
+        self.head_color = (self.head_color + 1) % len(self.colors)

@@ -1,11 +1,8 @@
+import random
+
 import pygame
 
-
-class Entity:
-    def __init__(self, location, color, name):
-        self.loc = location
-        self.color = color
-        self.name = name
+from Entity import Entity, BackgroundEntity
 
 
 class Location:
@@ -51,7 +48,7 @@ class Grid:
         for r in range(self.num_rows):
             for c in range(self.num_cols):
                 loc = Location(r, c)
-                self.add_entity(Entity(loc, self.get_background_color(loc), None))
+                self.add_entity(BackgroundEntity(self, loc, self.get_background_color(loc)))
 
     def get_background_color(self, loc):
         if loc.row % 2 == 0:
@@ -68,12 +65,7 @@ class Grid:
     def draw(self):
         for r in range(self.num_rows):
             for c in range(self.num_cols):
-                self.draw_entity(self.matrix[r][c])
-
-    def draw_entity(self, entity):
-        y, x = entity.loc.row * self.block_size, entity.loc.col * self.block_size
-        rect = pygame.Rect(x, y, self.block_size, self.block_size)
-        pygame.draw.rect(self.screen, entity.color, rect)
+                self.matrix[r][c].draw(self.screen)
 
     def in_bounds(self, loc):
         return 0 <= loc.row < self.num_rows and 0 <= loc.col < self.num_cols
@@ -89,14 +81,19 @@ class Grid:
             return Grid.right
 
         raise Exception("location is inbounds")
+
     def is_empty(self, loc):
         return self.get_entity(loc).name is None
 
     def get_entity(self, loc):
         return self.matrix[loc.row][loc.col]
 
-    def remove_entity(self, loc):
-        self.matrix[loc.row][loc.col] = Entity(loc, self.get_background_color(loc), None)
-
     def add_entity(self, entity):
         self.matrix[entity.loc.row][entity.loc.col] = entity
+
+    def remove_entity(self, loc):
+        self.matrix[loc.row][loc.col] = None
+        self.add_entity(BackgroundEntity(self, loc, self.get_background_color(loc)))
+
+    def random_cell(self):
+        return random.randrange(0, self.num_rows ), random.randrange(0, self.num_cols)

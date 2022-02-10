@@ -1,7 +1,9 @@
 import sys
 
 import pygame
-from grid import Grid
+
+from Entity import Apple
+from grid import Grid, Location
 from snake import Snake
 
 W_SIZE = W_WIDTH, W_HEIGHT = 1280, 720
@@ -16,13 +18,22 @@ pygame.display.set_caption(GAME_TITLE)
 clock = pygame.time.Clock()
 
 # Create Grid
-BLOCK_SIZE = 15
+BLOCK_SIZE = 20
 num_rows = W_HEIGHT // BLOCK_SIZE
 num_cols = W_WIDTH // BLOCK_SIZE
 grid = Grid(screen, num_rows, num_cols, BLOCK_SIZE)
 
 # Create snake
 snake = Snake(grid)
+
+# Add apples
+apples = []
+for i in range(10):
+    apple = Apple(grid, Location(*grid.random_cell()))
+    grid.add_entity(apple)
+    apples.append(apple)
+
+
 while True:
     for event in pygame.event.get():
 
