@@ -39,8 +39,21 @@ class Snake:
     def move(self, direction):
         self.curr_direction = direction
         new_loc = Location.add(direction, self.body[0])
+        if not self.grid.in_bounds(new_loc):
+            self.handle_out_of_bounds(new_loc)
         self.add_part(new_loc)
         self.remove_tail()
+
+    def handle_out_of_bounds(self, loc):
+        dir = self.grid.dir_out_bounds(loc)
+        if dir == Grid.up:
+            loc.row = self.grid.num_rows - 1
+        elif dir == Grid.down:
+            loc.row = 0
+        elif dir == Grid.right:
+            loc.col = 0
+        elif dir == Grid.left:
+            loc.col = self.grid.num_cols - 1
 
     def remove_tail(self):
         self.grid.remove_entity(self.body.pop())
@@ -51,4 +64,5 @@ class Snake:
 
         entity = Entity(loc, self.colors[self.head_color], "snake part")
         self.grid.add_entity(entity)
+
 

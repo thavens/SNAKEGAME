@@ -78,6 +78,17 @@ class Grid:
     def in_bounds(self, loc):
         return 0 <= loc.row < self.num_rows and 0 <= loc.col < self.num_cols
 
+    def dir_out_bounds(self, loc):
+        if loc.row < 0:
+            return Grid.up
+        elif loc.row >= self.num_rows:
+            return Grid.down
+        elif loc.col < 0:
+            return Grid.left
+        elif loc.col >= self.num_cols:
+            return Grid.right
+
+        raise Exception("location is inbounds")
     def is_empty(self, loc):
         return self.get_entity(loc).name is None
 
