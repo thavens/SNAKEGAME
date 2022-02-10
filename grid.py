@@ -53,22 +53,7 @@ class Grid:
                 loc = Location(r, c)
                 self.add_entity(Entity(loc, self.get_background_color(loc), None))
 
-    def add_snake(self, snake):
-        count = 0
-        for part_loc in snake.body:
-            color = snake.colors[0] if count % 2 == 0 else snake.colors[1]
-            if not self.in_bounds(part_loc):
-                raise Exception("Snake body part out of bounds")
-            self.add_entity(Entity(part_loc, color, "snake part"))
-            count += 1
-
     def get_background_color(self, loc):
-        # if row is even
-        # col is even == colored
-        # col is odd == blank
-        # if row is odd
-        # col is odd == colored
-        # col is even = blank
         if loc.row % 2 == 0:
             if loc.col % 2 == 0:
                 return Grid.grid_color[0]

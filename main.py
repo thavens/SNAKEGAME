@@ -21,7 +21,7 @@ num_cols = W_WIDTH // BLOCK_SIZE
 grid = Grid(screen, num_rows, num_cols, BLOCK_SIZE)
 
 print(num_rows, num_cols)
-snake = Snake()
+snake = Snake(grid)
 while True:
     for event in pygame.event.get():
 
@@ -38,8 +38,5 @@ while True:
             elif event.key == pygame.K_DOWN:
                 snake.move_down()
 
-        grid.init_background()
-        grid.add_snake(snake)
         grid.draw()
-
         pygame.display.flip()
