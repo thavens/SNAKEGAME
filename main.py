@@ -13,14 +13,15 @@ pygame.init()
 # Create screen
 screen = pygame.display.set_mode(W_SIZE)
 pygame.display.set_caption(GAME_TITLE)
+clock = pygame.time.Clock()
 
 # Create Grid
-BLOCK_SIZE = 20
+BLOCK_SIZE = 15
 num_rows = W_HEIGHT // BLOCK_SIZE
 num_cols = W_WIDTH // BLOCK_SIZE
 grid = Grid(screen, num_rows, num_cols, BLOCK_SIZE)
 
-print(num_rows, num_cols)
+# Create snake
 snake = Snake(grid)
 while True:
     for event in pygame.event.get():
@@ -38,5 +39,9 @@ while True:
             elif event.key == pygame.K_DOWN:
                 snake.move_down()
 
-        grid.draw()
-        pygame.display.flip()
+
+    snake.move_forward()
+    grid.draw()
+    pygame.display.flip()
+
+    clock.tick(15)

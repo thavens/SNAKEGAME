@@ -1,10 +1,11 @@
+
 from grid import Grid, Location, Entity
 import pygame
 
 
 class Snake:
-    orange = pygame.Color(255, 165, 0)
-    green = pygame.Color(0, 255, 100)
+    orange = pygame.Color(173, 72, 5)
+    green = pygame.Color(3, 69, 26)
     colors = (orange, green)
 
     def __init__(self, grid):
@@ -14,8 +15,6 @@ class Snake:
         self.head_color = 0
 
         self.init_snake()
-
-
 
     def init_snake(self):
         for i in range(20):
@@ -61,8 +60,8 @@ class Snake:
     def add_part(self, loc):
         self.body.insert(0, loc)
         self.head_color = (self.head_color + 1) % len(self.colors)
+        color = self.colors[self.head_color]
+        # color = helpers.random_color()
 
-        entity = Entity(loc, self.colors[self.head_color], "snake part")
+        entity = Entity(loc, color, "snake part")
         self.grid.add_entity(entity)
-
-
