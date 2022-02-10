@@ -2,21 +2,21 @@ import pygame
 
 
 class Entity:
-    def __init__(self, location,  color, name):
+    def __init__(self, location, color, name):
         self.loc = location
         self.color = color
         self.name = name
 
+
 class Location:
 
-    def __init__(self,  row, col):
+    def __init__(self, row, col):
         self.row = row
         self.col = col
 
     @staticmethod
     def add(loc_a, loc_b):
         return Location(loc_a.row + loc_b.row, loc_a.col + loc_b.col)
-
 
 
 class Grid:
@@ -45,17 +45,40 @@ class Grid:
         for r in range(self.num_rows):
             self.matrix.append([None] * self.num_cols)
 
-        count = 0
+        self.init_background()
+
+    def init_background(self):
         for r in range(self.num_rows):
-            count += 1
             for c in range(self.num_cols):
-                color = Grid.white if count % 2 == 0 else Grid.grey
                 loc = Location(r, c)
-                entity = Entity(loc, color, None)
-                self.matrix[r][c] = entity
+                self.add_entity(Entity(loc, self.get_background_color(loc), None))
 
-                count += 1
+    def add_snake(self, snake):
+        count = 0
+        for part_loc in snake.body:
+            color = snake.colors[0] if count % 2 == 0 else snake.colors[1]
+            if not self.in_bounds(part_loc):
+                raise Exception("Snake body part out of bounds")
+            self.add_entity(Entity(part_loc, color, "snake part"))
+            count += 1
 
+    def get_background_color(self, loc):
+        # if row is even
+        # col is even == colored
+        # col is odd == blank
+        # if row is odd
+        # col is odd == colored
+        # col is even = blank
+        if loc.row % 2 == 0:
+            if loc.col % 2 == 0:
+                return Grid.grid_color[0]
+            else:
+                return Grid.grid_color[1]
+        else:
+            if loc.col % 2 == 1:
+                return Grid.grid_color[0]
+            else:
+                return Grid.grid_color[1]
 
     def draw(self):
         for r in range(self.num_rows):
@@ -63,7 +86,7 @@ class Grid:
                 self.draw_entity(self.matrix[r][c])
 
     def draw_entity(self, entity):
-        x, y = entity.loc.row * self.block_size, entity.loc.col * self.block_size
+        y, x = entity.loc.row * self.block_size, entity.loc.col * self.block_size
         rect = pygame.Rect(x, y, self.block_size, self.block_size)
         pygame.draw.rect(self.screen, entity.color, rect)
 
@@ -75,3 +98,9 @@ class Grid:
 
     def get_entity(self, loc):
         return self.matrix[loc.row][loc.col]
+
+    def remove_entity(self, loc):
+        self.matrix[loc.row][loc.col] = Entity(loc, self.get_background_color(loc), None)
+
+    def add_entity(self, entity):
+        self.matrix[entity.loc.row][entity.loc.col] = entity

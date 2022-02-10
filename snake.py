@@ -1,10 +1,20 @@
 from grid import Grid, Location
-
+import pygame
 
 class Snake:
+    orange = pygame.Color(255, 165, 0)
+    green = pygame.Color(0, 255, 100)
+    colors = (orange, green)
     def __init__(self):
-        self.body = [Location(0, 0)]
-        self.curr_direction = Grid.up
+        self.body = []
+        self.init_snake()
+        self.curr_direction = Grid.down
+
+    def init_snake(self):
+        for i in range(20):
+            self.body.append(Location(i, 0))
+
+
 
     def move_up(self):
         self.move(Grid.up)
