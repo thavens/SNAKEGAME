@@ -1,4 +1,4 @@
-from Entity import SnakeEntity
+from entity import SnakeEntity
 from grid import Grid, Location, Entity
 import pygame
 

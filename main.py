@@ -2,7 +2,7 @@ import sys
 
 import pygame
 
-from Entity import Apple
+from entity import Apple
 from grid import Grid, Location
 from snake import Snake
 

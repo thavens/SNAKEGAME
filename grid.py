@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from Entity import Entity, BackgroundEntity
+from entity import Entity, BackgroundEntity
 
 
 class Location:
