@@ -27,7 +27,7 @@ snake = Snake(grid)
 
 # Add apples
 apples = []
-for i in range(10):
+for i in range(50):
     apple = Apple(grid, Location(*grid.random_cell()))
     grid.add_entity(apple)
     apples.append(apple)

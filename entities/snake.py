@@ -1,3 +1,5 @@
+import random
+
 from entities.edible import EdibleEntity
 from entities.entity import Entity
 from grid import Grid, Location
@@ -17,7 +19,9 @@ class SnakeEntity(Entity):
 class Snake:
     orange = pygame.Color(173, 72, 5)
     green = pygame.Color(3, 69, 26)
+    blue = pygame.Color(66, 135, 245)
     colors = (orange, green)
+
 
     def __init__(self, grid):
         self.body = []
@@ -28,7 +32,7 @@ class Snake:
         self.init_snake()
 
     def init_snake(self):
-        for i in range(1):
+        for i in range(15):
             self.add_part(Location(0, i))
 
     def move_up(self):
@@ -85,10 +89,14 @@ class Snake:
     def add_part(self, loc):
         self.update_head_color()
         color = self.colors[self.head_color]
+        if len(self.body) > 0:
+            self.body[0].color = color
         # color = helpers.random_color()
-        body_part = SnakeEntity(self.grid, loc, color)
+        body_part = SnakeEntity(self.grid, loc, self.blue)
         self.body.insert(0, body_part)
+
         self.grid.add_entity(body_part)
 
     def update_head_color(self):
         self.head_color = (self.head_color + 1) % len(self.colors)
+        #self.head_color = random.randint(0,1)

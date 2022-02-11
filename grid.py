@@ -19,7 +19,10 @@ class Grid:
     grey = pygame.Color(169, 169, 169)
     white = pygame.Color(190, 190, 190)
 
-    grid_color = grey, white
+    light_green = pygame.Color(140, 180, 69)
+    dark_green = pygame.Color(144,203,69)
+
+    grid_color = light_green, dark_green
 
     up = Location(-1, 0)
     down = Location(1, 0)
