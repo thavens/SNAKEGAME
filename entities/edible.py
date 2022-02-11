@@ -1,9 +1,14 @@
 import pygame
+from abc import ABC
 
 from entities.entity import Entity
 
 
-class Apple(Entity):
+class EdibleEntity(Entity, ABC):
+    pass
+
+
+class Apple(EdibleEntity):
     red = pygame.Color(133, 0, 0)
 
     def __init__(self, grid, location):

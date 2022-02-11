@@ -1,3 +1,4 @@
+from entities.edible import EdibleEntity
 from entities.entity import Entity
 from grid import Grid, Location
 import pygame
@@ -23,11 +24,11 @@ class Snake:
         self.curr_direction = Grid.down
         self.grid = grid
         self.head_color = 0
-
+        self.growth = 0
         self.init_snake()
 
     def init_snake(self):
-        for i in range(30):
+        for i in range(1):
             self.add_part(Location(0, i))
 
     def move_up(self):
@@ -57,9 +58,14 @@ class Snake:
             entity = self.grid.get_entity(new_loc)
             if isinstance(entity, SnakeEntity):
                 raise Exception("Game over, snake bit itself")
+            elif isinstance(entity, EdibleEntity):
+                self.growth += 1
 
         self.add_part(new_loc)
-        self.remove_tail()
+        if self.growth > 0:
+            self.growth -= 1
+        else:
+            self.remove_tail()
 
     def handle_out_of_bounds(self, loc):
         dir = self.grid.dir_out_bounds(loc)
@@ -74,6 +80,7 @@ class Snake:
 
     def remove_tail(self):
         self.grid.remove_entity(self.body.pop().loc)
+
 
     def add_part(self, loc):
         self.update_head_color()
