@@ -1,7 +1,16 @@
-from entity import SnakeEntity
-from grid import Grid, Location, Entity
+from entities.entity import Entity
+from grid import Grid, Location
 import pygame
 
+
+class SnakeEntity(Entity):
+    def __init__(self, grid, location, color):
+        super().__init__(grid, location, color, "snake body")
+
+    def draw(self, screen):
+        y, x = self.loc.row * self.grid.block_size, self.loc.col * self.grid.block_size
+        rect = pygame.Rect(x, y, self.grid.block_size, self.grid.block_size)
+        pygame.draw.rect(screen, self.color, rect)
 
 
 class Snake:
@@ -39,8 +48,16 @@ class Snake:
     def move(self, direction):
         self.curr_direction = direction
         new_loc = Location.add(direction, self.body[0].loc)
+
+        # check out of bounds
         if not self.grid.in_bounds(new_loc):
             self.handle_out_of_bounds(new_loc)
+        # check collision
+        if not self.grid.is_empty(new_loc):
+            entity = self.grid.get_entity(new_loc)
+            if isinstance(entity, SnakeEntity):
+                raise Exception("Game over, snake bit itself")
+
         self.add_part(new_loc)
         self.remove_tail()
 
@@ -63,7 +80,7 @@ class Snake:
         color = self.colors[self.head_color]
         # color = helpers.random_color()
         body_part = SnakeEntity(self.grid, loc, color)
-        self.body.insert(0, body_part )
+        self.body.insert(0, body_part)
         self.grid.add_entity(body_part)
 
     def update_head_color(self):
