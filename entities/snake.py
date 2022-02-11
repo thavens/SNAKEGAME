@@ -2,6 +2,7 @@ import random
 
 from entities.edible import EdibleEntity
 from entities.entity import Entity
+from entities.wall import ImmovableEntity
 from grid import Grid, Location
 import pygame
 
@@ -64,7 +65,8 @@ class Snake:
                 raise Exception("Game over, snake bit itself")
             elif isinstance(entity, EdibleEntity):
                 self.growth += 1
-
+            elif isinstance(entity, ImmovableEntity):
+                raise Exception("Game over, snake hit a wall")
         self.add_part(new_loc)
         if self.growth > 0:
             self.growth -= 1

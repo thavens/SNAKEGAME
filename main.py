@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from entities.edible import Apple
+from entities.wall import Wall
 from grid import Grid, Location
 from entities.snake import Snake
 
@@ -27,10 +28,17 @@ snake = Snake(grid)
 
 # Add apples
 apples = []
-for i in range(50):
+for i in range(100):
     apple = Apple(grid, Location(*grid.random_cell()))
     grid.add_entity(apple)
     apples.append(apple)
+
+#Add walls
+    wall = []
+for i in range(30):
+    wall = Wall(grid, Location(*grid.random_cell()))
+    grid.add_entity(wall)
+    apples.append(wall)
 
 while True:
     for event in pygame.event.get():

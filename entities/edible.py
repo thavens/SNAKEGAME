@@ -13,8 +13,6 @@ class EdibleEntity(Entity, ABC):
 class Apple(EdibleEntity):
     red = pygame.Color(133, 0, 0)
 
-
-
     def __init__(self, grid, location):
         super().__init__(grid, location, pygame.Color(random.randint(50,255), 0, 0),  "apple")
 
