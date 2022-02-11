@@ -1,8 +1,7 @@
 import random
-
 import pygame
 
-from entity import Entity, BackgroundEntity
+from entities.entity import BackgroundEntity
 
 
 class Location:
@@ -48,19 +47,8 @@ class Grid:
         for r in range(self.num_rows):
             for c in range(self.num_cols):
                 loc = Location(r, c)
-                self.add_entity(BackgroundEntity(self, loc, self.get_background_color(loc)))
+                self.add_entity(BackgroundEntity(self, loc, Grid.get_background_color(loc)))
 
-    def get_background_color(self, loc):
-        if loc.row % 2 == 0:
-            if loc.col % 2 == 0:
-                return Grid.grid_color[0]
-            else:
-                return Grid.grid_color[1]
-        else:
-            if loc.col % 2 == 1:
-                return Grid.grid_color[0]
-            else:
-                return Grid.grid_color[1]
 
     def draw(self):
         for r in range(self.num_rows):
@@ -83,7 +71,7 @@ class Grid:
         raise Exception("location is inbounds")
 
     def is_empty(self, loc):
-        return self.get_entity(loc).name is None
+        return isinstance(self.get_entity(loc), BackgroundEntity)
 
     def get_entity(self, loc):
         return self.matrix[loc.row][loc.col]
@@ -96,4 +84,17 @@ class Grid:
         self.add_entity(BackgroundEntity(self, loc, self.get_background_color(loc)))
 
     def random_cell(self):
-        return random.randrange(0, self.num_rows ), random.randrange(0, self.num_cols)
+        return random.randrange(0, self.num_rows), random.randrange(0, self.num_cols)
+
+    @staticmethod
+    def get_background_color(loc):
+        if loc.row % 2 == 0:
+            if loc.col % 2 == 0:
+                return Grid.grid_color[0]
+            else:
+                return Grid.grid_color[1]
+        else:
+            if loc.col % 2 == 1:
+                return Grid.grid_color[0]
+            else:
+                return Grid.grid_color[1]
