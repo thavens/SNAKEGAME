@@ -109,11 +109,11 @@ while True:
                     if start_button.isOver(mouse):
                         start_button.color = (105, 105, 105)
                     else:
-                        start_button.color = (0, 255, 0)
+                        start_button.color = GREEN
                     if quit_button.isOver(mouse):
                         quit_button.color = (105, 105, 105)
                     else:
-                        quit_button.color = (255, 0, 0)
+                        quit_button.color = RED
     
     pygame.display.update()
     clock.tick(60)
