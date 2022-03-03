@@ -39,6 +39,8 @@ class Grid:
         self.init_matrix()
         self.draw()
 
+        self.score = 0
+
     def init_matrix(self):
         self.matrix = []
         for r in range(self.num_rows):
@@ -83,6 +85,9 @@ class Grid:
         self.matrix[entity.loc.row][entity.loc.col] = entity
 
     def remove_entity(self, loc):
+        if self.matrix[loc.row][loc.col].name == 'apple':
+            self.score += 10
+            print(self.score)
         self.matrix[loc.row][loc.col] = None
         self.add_entity(BackgroundEntity(self, loc, self.get_background_color(loc)))
 
