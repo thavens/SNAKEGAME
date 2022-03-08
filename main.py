@@ -39,6 +39,11 @@ for i in range(30):
     wall = Wall(grid, Location(*grid.random_cell()))
     grid.add_entity(wall)
     apples.append(wall)
+    
+def scoreBoard(score):
+    font = pygame.font.Font('font/Pixeltype.ttf', 50)
+    text = font.render('Score: ' + str(score), True, 'White')
+    screen.blit(text, (10, 10))
 
 while True:
     for event in pygame.event.get():
@@ -59,5 +64,7 @@ while True:
     snake.move_forward()
     grid.draw()
     pygame.display.flip()
+    scoreBoard(grid.score)
+    pygame.display.update()
 
     clock.tick(15)
