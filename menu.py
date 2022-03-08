@@ -53,7 +53,6 @@ pygame.display.set_caption(GAME_TITLE)
 clock = pygame.time.Clock()
 
 # Create Menu
-
 start_button = Button(screen, 'font/Pixeltype.ttf', 50, BLACK, 575, 350, W_WIDTH / 2 - 200, W_HEIGHT / 2 - 100, "Start")
 quit_button = Button(screen, 'font/Pixeltype.ttf', 50, BLACK, 575, 425, W_WIDTH / 2 - 200, W_HEIGHT / 2 - 100, "Quit")
 menu_button = Button(screen, 'font/Pixeltype.ttf', 50, BLACK, 575, 350, W_WIDTH / 2 - 200, W_HEIGHT / 2 - 100, "Menu")
@@ -67,14 +66,17 @@ retry_button = Button(screen, 'font/Pixeltype.ttf', 50, BLACK, 575, 500, W_WIDTH
 # width = screen.get_width()
 # height = screen.get_height()
 
-
-# text_surface = font.render('Palgorithm Winter 2022 Snake Game', False, 'White')
-
 # snake_surface = pygame.image.load('SNAKEGAME/snake_palgorithm.png')
 # snake_small = pygame.transform.scale(snake_surface, (300, 200))
 
+def title():
+    font = pygame.font.Font('font/Pixeltype.ttf', 50)
+    text_surface = font.render('Palgorithm Winter 2022 Snake Game', False, 'White')
+    screen.blit(text_surface, (400, 50))
+
 def redrawMenuWindow():
     screen.fill((0, 0, 0))
+    title()
     start_button.draw_button((0, 0, 0))
     quit_button.draw_button((0, 0, 0))
 
