@@ -2,6 +2,7 @@ import random
 import pygame
 
 from entities.entity import BackgroundEntity
+from sounds import Sounds
 
 
 class Location:
@@ -40,6 +41,7 @@ class Grid:
         self.draw()
 
         self.score = 0
+        self.sound = Sounds()
 
     def init_matrix(self):
         self.matrix = []
@@ -86,6 +88,7 @@ class Grid:
 
     def remove_entity(self, loc):
         if self.matrix[loc.row][loc.col].name == 'apple':
+            self.sound.eat()
             self.score += 10
             print(self.score)
         self.matrix[loc.row][loc.col] = None
