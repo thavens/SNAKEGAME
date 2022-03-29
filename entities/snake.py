@@ -4,6 +4,7 @@ from entities.edible import EdibleEntity
 from entities.entity import Entity
 from entities.wall import ImmovableEntity
 from grid import Grid, Location
+from sounds import Sounds
 import pygame
 
 
@@ -62,10 +63,12 @@ class Snake:
         if not self.grid.is_empty(new_loc):
             entity = self.grid.get_entity(new_loc)
             if isinstance(entity, SnakeEntity):
+                Sounds.die()
                 raise Exception("Game over, snake bit itself")
             elif isinstance(entity, EdibleEntity):
                 self.growth += 1
             elif isinstance(entity, ImmovableEntity):
+                Sounds.die()
                 raise Exception("Game over, snake hit a wall")
         self.add_part(new_loc)
         if self.growth > 0:
