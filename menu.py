@@ -1,5 +1,6 @@
 import pygame
 import sys
+from sounds import Sounds
 
 
 #COLORS
@@ -8,6 +9,8 @@ WHITE = (255, 255, 255)
 RED   = (255,  0,  0)
 GREEN = (  0,255,  0)
 BLUE  = (  0,  0,255)
+
+sound = Sounds()
 
 class Button:
     def __init__(self, screen, font, size, color, x, y, width, height, text):
@@ -35,6 +38,7 @@ class Button:
     def isOver(self, pos):
         if pos[0] > self.x and pos[0] < self.x + self.width/3:
             if pos[1] > self.y and pos[1] < self.y + self.height/3:
+                sound.hover()
                 return True
 
         return False
@@ -89,6 +93,7 @@ game_state = 'menu'
 while True:
     if game_state == 'menu':
         redrawMenuWindow()
+        sound.game_music()
 
 
     pygame.display.update()
@@ -104,22 +109,27 @@ while True:
             if game_state == "menu":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button.isOver(mouse):
+                        sound.click()
                         print("Game Started!")
                         game_state = "game"
                     if quit_button.isOver(mouse):
+                        sound.click()
                         pygame.quit()
                         sys.exit()
 
             if game_state == "retry":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button.isOver(mouse):
+                        sound.click()
                         print("Game Started!")
                         game_state = "menu"
                     if quit_button.isOver(mouse):
+                        sound.click()
                         pygame.quit()
                         sys.exit()
 
                     if retry_button.isOver(mouse):
+                        sound.click()
                         game_state = "game"
                 
             if game_state == "game":
