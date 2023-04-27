@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+certifi = "==2021.10.8"
+distlib = "==0.3.4"
+filelock = "==3.4.2"
+pipenv = "==2022.1.8"
+platformdirs = "==2.5.0"
+pygame = "==2.1.2"
+six = "==1.16.0"
+virtualenv = "==20.13.1"
+virtualenv-clone = "==0.5.7"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
